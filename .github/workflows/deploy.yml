@@ -42,6 +42,7 @@ jobs:
 
       - name: Deploy to DigitalOcean Kubernetes
         run: |
+          kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig delete secret prod-discord-secret
           kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig create secret generic prod-discord-secret --from-literal=token=${{ secrets.PRODUCTION_DISCORD_TOKEN }}
           kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig apply -f $GITHUB_WORKSPACE/.k8/deployment.yml
 
