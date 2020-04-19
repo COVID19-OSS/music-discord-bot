@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: music-discord-bot-deployment
+  labels:
+    app: music-discord-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: music-discord-bot
+  template:
+    metadata:
+      labels:
+        app: music-discord-bot
+    spec:
+      containers:
+        - name: music-discord-bot
+          image: <IMAGE>
+          env:
+            - name: DISCORD_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: prod-discord-secret
+                  key: token
+            - name: DISCORD_PREFIX
+              value: "!"
